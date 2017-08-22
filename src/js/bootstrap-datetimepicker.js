@@ -338,7 +338,9 @@
                         picker.widget.removeClass('pull-right');
                     }
 
-                    if (placePosition === 'top') {
+                    if (picker.options.inline) {
+                        picker.element.append(picker.widget);
+                    } else if (placePosition === 'top') {
                         picker.widget.css({
                             position: position,
                             bottom: 'auto',
@@ -1251,6 +1253,9 @@
             };
 
             picker.hide = function () {
+                if (picker.options.inline) {
+                    return;
+                }
                 // Ignore event if in the middle of a picker transition
                 var collapse = picker.widget.find('.collapse'), i, collapseData;
                 for (i = 0; i < collapse.length; i++) {
@@ -1368,6 +1373,7 @@
     };
 
     $.fn.datetimepicker.defaults = {
+        inline: false,
         format: false,
         pickDate: true,
         pickTime: true,
