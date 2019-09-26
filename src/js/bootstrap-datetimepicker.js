@@ -219,8 +219,8 @@
                     }
                     else {
                         eData = picker.element.data();
-                        //eData = picker.element.find('input').data();
                     }
+
                     if (eData.dateFormat !== undefined) {
                         picker.options.format = eData.dateFormat;
                     }
@@ -477,7 +477,7 @@
                         } else if (prevMonth.year() > year || (prevMonth.year() === year && prevMonth.month() > month)) {
                             clsName += ' new';
                         }
-                        if (prevMonth.isSame(getDateTime({y: picker.date.year(), M: picker.date.month(), d: picker.date.date()}))) {
+                        if (prevMonth.isSame(moment({y: picker.date.year(), M: picker.date.month(), d: picker.date.date()}))) {
                             clsName += ' active';
                         }
                         if (isInDisableDates(prevMonth, 'day') || !isInEnableDates(prevMonth)) {
@@ -661,7 +661,7 @@
                                         picker.viewDate.year(year);
                                     }
                                     if (picker.viewMode === picker.minViewMode) {
-                                        picker.date = getDateTime({
+                                        picker.date = moment({
                                             y: picker.viewDate.year(),
                                             M: picker.viewDate.month(),
                                             d: picker.viewDate.date(),
@@ -695,7 +695,7 @@
                                                 month += 1;
                                             }
                                         }
-                                        picker.date = getDateTime({
+                                        picker.date = moment({
                                                 y: year,
                                                 M: month,
                                                 d: day,
@@ -704,7 +704,7 @@
                                                 s: picker.date.seconds()
                                             }
                                         );
-                                        picker.viewDate = getDateTime({
+                                        picker.viewDate = moment({
                                             y: year, M: month, d: Math.min(28, day)
                                         });
                                         fillDate();
@@ -806,7 +806,7 @@
                         rv = actions[action].apply(picker, arguments);
                     stopEvent(e);
                     if (!picker.date) {
-                        picker.date = getDateTime({y: 1970});
+                        picker.date = moment({y: 1970});
                     }
                     set();
                     fillTime();
@@ -968,13 +968,6 @@
                     if (!picker.options.pickTime) {
                         picker.hide();
                     }
-                },
-
-                getDateTime = function(unitsObject) {
-                    var timezoneOffset = new Date().getTimezoneOffset();
-                    return moment(unitsObject).add(
-                        (-1* timezoneOffset) - moment().utcOffset(),
-                        'minutes');
                 },
 
                 checkDate = function (direction, unit, amount) {
@@ -1291,7 +1284,7 @@
                 if (newDate.isValid()) {
                     picker.date = newDate;
                     set();
-                    picker.viewDate = getDateTime({y: picker.date.year(), M: picker.date.month()});
+                    picker.viewDate = moment({y: picker.date.year(), M: picker.date.month()});
                     fillDate();
                     fillTime();
                 }
